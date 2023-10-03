@@ -6,6 +6,8 @@ import { UsersModule } from './users/users.module';
 import { UserTypeModule } from './user-type/user-type.module';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { DataSource } from 'typeorm';
+import { UserTypeEntity } from './user-type/models/user-type.model';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -18,6 +20,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       password: process.env.DB_PASSWORD,
       port: Number(process.env.DB_PORT),
       username: process.env.DB_USERNAME,
+      entities: [UserTypeEntity],
+      synchronize: true,
     }),
     AuthModule,
     UsersModule,
@@ -26,4 +30,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule {
+  constructor(private dataSource: DataSource) {}
+}
