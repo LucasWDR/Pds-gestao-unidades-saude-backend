@@ -1,22 +1,11 @@
-import {
-  Column,
-  CreateDateColumn,
-  Entity,
-  PrimaryGeneratedColumn,
-  UpdateDateColumn,
-} from 'typeorm';
+import { BaseModel } from 'src/entity/base.model';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity({ name: 'user-type' })
-export class UserTypeEntity {
+export class UserType extends BaseModel<UserType> {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ name: 'name' })
+  @Column({ name: 'name', nullable: false })
   name: string;
-
-  @CreateDateColumn({ name: 'created_at' })
-  createAt: string;
-
-  @UpdateDateColumn({ name: 'updated_at' })
-  updateAt: string;
 }

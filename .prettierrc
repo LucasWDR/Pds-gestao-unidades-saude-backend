@@ -1,4 +1,18 @@
 {
   "singleQuote": true,
-  "trailingComma": "all"
+  "printWidth": 80,
+  "tabWidth": 2,
+  "useTabs": false,
+  "bracketSpacing": true,
+  "semi": true,
+  "prettier/prettier": [
+    "error",
+    {
+      "parser": "flow"
+    }
+  ],
+  "trailingComma": "es5",
+  "quoteProps": "consistent",
+  "arrowParens": "always",
+  "endOfLine": "lf"
 }
