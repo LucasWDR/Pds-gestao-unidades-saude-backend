@@ -4,12 +4,15 @@ import {
   Get,
   HttpException,
   HttpStatus,
+  Param,
+  Patch,
   Post,
 } from '@nestjs/common';
 import { ApiResponse } from '@nestjs/swagger';
 import { UserTypeService } from 'src/user-type/services/user-type/user-type.service';
 import { ListUserTypeDTO } from 'src/user-type/dto/list-userType.dto';
 import { CreateOrUpdateTypeUserDto } from 'src/user-type/dto/create-userType.dto';
+import { Delete } from '@nestjs/common/decorators';
 
 @Controller('user-type')
 export class UserTypeController {
@@ -44,5 +47,18 @@ export class UserTypeController {
   public async findAll(): Promise<ListUserTypeDTO[]> {
     const userTypeAll = await this.userTypeService.userTypeAll();
     return userTypeAll.map<ListUserTypeDTO>(ListUserTypeDTO.toDto);
+  }
+
+  @Patch('/update/:id')
+  public async update(
+    @Param('id') userTypeId: string,
+    @Body() userType: CreateOrUpdateTypeUserDto
+  ) {
+    return await this.userTypeService.update(userTypeId, userType);
+  }
+
+  @Delete('/delete/:id')
+  public async delete(@Param('id') userTypeId: string): Promise<void> {
+    return this.userTypeService.deleteById(userTypeId);
   }
 }

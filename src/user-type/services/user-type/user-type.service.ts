@@ -20,4 +20,38 @@ export class UserTypeService {
   async userTypeAll(): Promise<UserType[]> {
     return this.userTypeRepository.find();
   }
+
+  async findById(userTypeId: string): Promise<UserType> {
+    return this.findById(userTypeId);
+  }
+
+  async update(userTypeId: string, userTypeDto: CreateOrUpdateTypeUserDto) {
+    /* const findUserTypeId = await this.userTypeRepository
+      .createQueryBuilder('user-type')
+      .where('id = :id', { id: userTypeId })
+      .getOne();
+
+    if (!findUserTypeId) {
+      throw new NotFoundException('This user type does not exists');
+    } */
+
+    const userTypeUpdated = await this.userTypeRepository
+      .createQueryBuilder('user-type')
+      .update()
+      .set({
+        name: userTypeDto.name,
+      })
+      .where('id = :id', { id: userTypeId })
+      .execute();
+
+    return userTypeUpdated;
+  }
+
+  async deleteById(userTypeId: string) {
+    const userTypeDeleted = await this.userTypeRepository.findOne({
+      where: { id: userTypeId },
+    });
+
+    await this.userTypeRepository.remove(userTypeDeleted);
+  }
 }
