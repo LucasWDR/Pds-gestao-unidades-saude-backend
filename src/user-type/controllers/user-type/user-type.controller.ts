@@ -1,23 +1,20 @@
 import {
   Body,
   Controller,
+  Get,
   HttpException,
   HttpStatus,
   Post,
 } from '@nestjs/common';
 import { ApiResponse } from '@nestjs/swagger';
 import { UserTypeService } from 'src/user-type/services/user-type/user-type.service';
-import { ListUserType } from 'src/user-type/dto/list-userType.dto';
+import { ListUserTypeDTO } from 'src/user-type/dto/list-userType.dto';
 import { CreateOrUpdateTypeUserDto } from 'src/user-type/dto/create-userType.dto';
 
 @Controller('user-type')
 export class UserTypeController {
   constructor(private userTypeService: UserTypeService) {}
 
-  @ApiResponse({
-    status: HttpStatus.OK,
-    description: 'Data has been recorded successfully',
-  })
   @ApiResponse({
     status: HttpStatus.OK,
     description: 'Request succesfully',
@@ -29,18 +26,23 @@ export class UserTypeController {
     status: HttpStatus.INTERNAL_SERVER_ERROR,
     description: 'Internal Server Error',
   })
-  @Post()
+  @Post('/create')
   public async create(@Body() userType: CreateOrUpdateTypeUserDto) {
     try {
-      return ListUserType.toDto(await this.userTypeService.save(userType));
+      return ListUserTypeDTO.toDto(await this.userTypeService.save(userType));
     } catch (error) {
       throw new HttpException(
         {
           status: HttpStatus.NOT_FOUND,
           error: `was not created`,
         },
-        404,
+        404
       );
     }
+  }
+  @Get('/all')
+  public async findAll(): Promise<ListUserTypeDTO[]> {
+    const userTypeAll = await this.userTypeService.userTypeAll();
+    return userTypeAll.map<ListUserTypeDTO>(ListUserTypeDTO.toDto);
   }
 }

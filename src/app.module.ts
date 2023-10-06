@@ -7,7 +7,7 @@ import { UserTypeModule } from './user-type/user-type.module';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
-import { UserTypeEntity } from './user-type/models/user-type.model';
+import { UserType } from './user-type/models/user-type.model';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -20,7 +20,7 @@ import { UserTypeEntity } from './user-type/models/user-type.model';
       password: process.env.DB_PASSWORD,
       port: Number(process.env.DB_PORT),
       username: process.env.DB_USERNAME,
-      entities: [UserTypeEntity],
+      entities: [UserType],
       synchronize: true,
     }),
     AuthModule,

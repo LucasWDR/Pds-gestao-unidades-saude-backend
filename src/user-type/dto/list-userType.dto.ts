@@ -2,7 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { BaseDTO } from 'src/entity/base.dto';
 import { UserType } from '../models/user-type.model';
 
-export class ListUserType extends BaseDTO<ListUserType> {
+export class ListUserTypeDTO extends BaseDTO<ListUserTypeDTO> {
   @ApiProperty()
   id: string;
 
@@ -10,7 +10,7 @@ export class ListUserType extends BaseDTO<ListUserType> {
   name: string;
 
   static toDto(entity: UserType) {
-    return new ListUserType({
+    return new ListUserTypeDTO({
       id: entity.id,
       name: entity.name,
     });
